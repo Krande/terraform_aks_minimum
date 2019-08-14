@@ -35,9 +35,6 @@ variable "aks_client_secret" {
 }
 
 # Pypi specific details
-variable "pypi_docker" {
-  description = ""
-}
 variable "domain_address" {
   description = ""
 }

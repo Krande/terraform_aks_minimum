@@ -18,7 +18,6 @@ az_subscription_id = <"azuresubscriptionid">
 az_tenant_id = <"azuretenantid">
 az_storage_name = <"azurestoragename">
 az_storage_access_key = <"azurestorageccesskey">
-pypi_docker = <"pypiserver/pypiserver:latest">
 domain_address = <"domainaddress.com">
 email = <"youremail@something.com">
 ```
@@ -26,10 +25,15 @@ email = <"youremail@something.com">
 ## Initialize
 Start by running "make init" in a terminal in the folder 
 
-(for windows user, install chocolatey package manager and install GNU Make using "choco install Make")
+(for windows user, install chocolatey package manager and install GNU Make using "choco install make")
 
 After successful initiation run "terraform apply"
 
+## Remaining work
+Missing certificates. See my question [here](https://stackoverflow.com/questions/57499838/how-to-issue-letsencrypt-certificate-for-k8s-aks-using-terraform-resources)
+on Stack Overflow regarding issuing certificates using Terraform resources (this repo is created to answer what I could 
+not find anywhere else)  This issue is still not answered, so if anyone else have any ideas or any tips to improve this 
+example I would really appreciate it!     
 
 ### Sources
 * https://docs.microsoft.com/en-us/azure/terraform/terraform-create-k8s-cluster-with-tf-and-aks

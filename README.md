@@ -7,6 +7,8 @@ with the intent of addressing an error in issuing certificates after converting 
 This assumes you have a microsoft azure account, a domain name, azure storage account and have the dns to be handled by 
 azure (how to setup this is better explained elsewhere)
 
+For windows user, install chocolatey package manager and install GNU Make using "choco install make".
+
 ## Fill in necessary variables
 You need to create a terraform variables file "terraform.tfvars" in your folder and copy paste the following 
 
@@ -26,11 +28,12 @@ email = <"youremail@something.com">
 ```
 
 ## Initialize
-Start by running "make init" in a terminal in the folder 
 
-(for windows user, install chocolatey package manager and install GNU Make using "choco install make")
+* Start by running "make init" in a terminal in the folder 
 
-After successful initiation run "terraform apply"
+* After successful initiation run "terraform apply"
+
+* lastly to interact with your kubernetes cluster after use (on windows) "set KUBECONFIG=.kubeconfig"
 
 ### Sources
 * https://docs.microsoft.com/en-us/azure/terraform/terraform-create-k8s-cluster-with-tf-and-aks

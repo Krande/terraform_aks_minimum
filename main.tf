@@ -62,11 +62,9 @@ resource "local_file" "kubeconfig" {
 
 module "ingress" {
   source = "./modules/ingress"
-  azure_dns_rg_name = var.azure_dns_rg
+  az_dns_rg = var.az_dns_rg
   az_dns_zone = var.domain_address
 }
-
-
 
 module "cert" {
   source = "./modules/cert"

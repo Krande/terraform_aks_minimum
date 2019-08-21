@@ -1,7 +1,6 @@
 # General Variables
 variable "prefix" {
   description = "Prefix"
-  default = "aksdemo"
 }
 variable "dns_prefix" {
   description = "Forms part of the fully qualified domain name (FQDN) used to access the cluster"
@@ -22,7 +21,8 @@ variable "az_storage_access_key" {
 }
 variable "az_backend_key" {
 }
-variable "azure_dns_rg" {
+variable "az_dns_rg" {
+  description = "Name of azure dns resource group"
   default = "azure_dns"
 }
 
@@ -46,14 +46,14 @@ variable "email" {
 
 variable "cert_server" {
   description = "Set the certificate server to either the staging or production server"
-  default = "https://acme-staging-v02.api.letsencrypt.org/directory"
-  #default = "https://acme-v02.api.letsencrypt.org/directory"
+  #default = "https://acme-staging-v02.api.letsencrypt.org/directory"
+  default = "https://acme-v02.api.letsencrypt.org/directory"
 }
 
 locals {
   context = {
     host = azurerm_kubernetes_cluster.aksdemo.kube_config[0].host
-    azure_dns_rg = var.azure_dns_rg
+    azure_dns_rg = var.az_dns_rg
     client_id = var.aks_client_id
     client_certificate = base64decode(azurerm_kubernetes_cluster.aksdemo.kube_config.0.client_certificate)
     client_key = base64decode(azurerm_kubernetes_cluster.aksdemo.kube_config.0.client_key)

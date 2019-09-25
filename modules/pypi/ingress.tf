@@ -6,7 +6,7 @@ resource "kubernetes_ingress" "pypi" {
     annotations = {
       "kubernetes.io/ingress.class" = "inet"
       "kubernetes.io/tls-acme" = "true"
-      "certmanager.k8s.io/cluster-issuer" = "letsencrypt-prod"
+      "certmanager.k8s.io/cluster-issuer" = "letsencrypt-${var.cert_type}"
       "ingress.kubernetes.io/ssl-redirect" = "true"
     }
   }
@@ -14,6 +14,7 @@ resource "kubernetes_ingress" "pypi" {
   spec {
     tls {
       hosts = [var.pypi_address]
+      secret_name = "pypi-${var.cert_type}-letsencrypt"
     }
     rule {
       host = var.pypi_address

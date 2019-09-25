@@ -2,7 +2,6 @@ resource "kubernetes_deployment" "pypi" {
   metadata {
     name      = "pypi"
     namespace = kubernetes_namespace.pypi.metadata[0].name
-
     labels = {
       app = "pypi"
     }

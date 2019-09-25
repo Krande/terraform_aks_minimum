@@ -36,7 +36,8 @@ resource "kubernetes_deployment" "nginx_ingress_controller" {
         service_account_name = kubernetes_service_account.nginx_ingress_serviceaccount.metadata[0].name
         container {
           name = "nginx-ingress-controller"
-          image = "quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0"
+          #image = "quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0"
+          image = "quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.25.1"
           volume_mount {
             mount_path = "/var/run/secrets/kubernetes.io/serviceaccount"
             name = kubernetes_service_account.nginx_ingress_serviceaccount.default_secret_name

@@ -13,6 +13,13 @@ variable "az_subscription_id" {
 variable "az_tenant_id" {
   description = "Your Azure tenant ID"
 }
+
+variable "az_storage_rg" {
+  description = "Azure Storage Resource Group for State Storage"
+}
+variable "az_storage_cont" {
+  description = "Azure Storage Container for State Storage"
+}
 variable "az_storage_name" {
   description = "Your azure storage for hosting TF state files"
 }
@@ -44,11 +51,22 @@ variable "email" {
   description = "Your email relevant for letsencrypt certificate"
 }
 
-variable "cert_server" {
-  description = "Set the certificate server to either the staging or production server"
-  #default = "https://acme-staging-v02.api.letsencrypt.org/directory"
+variable "cert_type" {
+  description = "prod or staging acme certificate"
+  default = "staging"
+  #default = "prod"
+}
+
+variable "cert_staging" {
+  description = "The letsencrypt staging certificate issuer server address"
+  default = "https://acme-staging-v02.api.letsencrypt.org/directory"
+}
+
+variable "cert_prod" {
+  description = "The letsencrypt production certificate issuer server address"
   default = "https://acme-v02.api.letsencrypt.org/directory"
 }
+
 
 locals {
   context = {
@@ -61,7 +79,9 @@ locals {
     client_secret = var.aks_client_secret
     azure_subscription_id = var.az_subscription_id
     azure_tenant_id = var.az_tenant_id
-    cert_server = var.cert_server
+    cert_type = var.cert_type
+    cert_staging = var.cert_staging
+    cert_prod = var.cert_prod
     email = var.email
     domain_address = var.domain_address
   }

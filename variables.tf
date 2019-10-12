@@ -6,14 +6,16 @@ variable "dns_prefix" {
   description = "Forms part of the fully qualified domain name (FQDN) used to access the cluster"
 }
 
-# Azure specific variables
+#region Azure specific variables
 variable "az_subscription_id" {
   description = "Your Azure Subscription ID"
 }
 variable "az_tenant_id" {
   description = "Your Azure tenant ID"
 }
+#endregion
 
+#region AKS TF States
 variable "az_storage_rg" {
   description = "Azure Storage Resource Group for State Storage"
 }
@@ -32,6 +34,7 @@ variable "az_dns_rg" {
   description = "Name of azure dns resource group"
   default = "azure_dns"
 }
+#endregion
 
 # AKS specific variables
 variable "aks_client_id" {

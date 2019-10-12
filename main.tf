@@ -1,6 +1,5 @@
 # Configure the provider
 provider "azurerm" {
-  version = "=1.30.1"
 }
 
 terraform {
@@ -78,14 +77,14 @@ provider "helm" {
   }
 }
 
-module "cert" {
-  source = "./modules/cert_alt"
-  context = local.context
-  ip_address = module.ingress.ip_address
-}
-
 module "pypi" {
   source = "./modules/pypi"
   pypi_address = var.domain_address
   cert_type = var.cert_type
+}
+
+module "cert" {
+  source = "./modules/cert_alt"
+  context = local.context
+  ip_address = module.ingress.ip_address
 }

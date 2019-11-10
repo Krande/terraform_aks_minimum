@@ -1,10 +1,34 @@
-# General Variables
-variable "prefix" {
-  description = "Prefix"
+# Set default name prefix
+variable "name_prefix" {
+  default = "tfaksmin"
 }
-variable "dns_prefix" {
-  description = "Forms part of the fully qualified domain name (FQDN) used to access the cluster"
+
+# Set default location
+variable "location" {
+  default = "northeurope"
 }
+
+variable "cert_type" {
+  description = "prod or staging acme certificate"
+  default = "staging"
+}
+
+variable "email" {
+  description = "Email linked to your generated certificate"
+}
+
+variable "root_address" {
+  description = "Root address of your domain"
+}
+
+variable "az_dns_rg" {
+  default = "azure_dns"
+}
+
+variable "ingress_class" {
+  default = "nginx"
+}
+
 
 #region Azure specific variables
 variable "az_subscription_id" {
@@ -12,6 +36,12 @@ variable "az_subscription_id" {
 }
 variable "az_tenant_id" {
   description = "Your Azure tenant ID"
+}
+variable "az_client_id" {
+  description = "The Client ID for the Service Principal to use for this Managed Kubernetes Cluster"
+}
+variable "az_client_secret" {
+  description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 #endregion
 
@@ -30,62 +60,4 @@ variable "az_storage_access_key" {
 }
 variable "az_backend_key" {
 }
-variable "az_dns_rg" {
-  description = "Name of azure dns resource group"
-  default = "azure_dns"
-}
 #endregion
-
-# AKS specific variables
-variable "aks_client_id" {
-  description = "The Client ID for the Service Principal to use for this Managed Kubernetes Cluster"
-}
-variable "aks_client_secret" {
-  description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
-}
-
-# Pypi specific details
-variable "domain_address" {
-  description = ""
-}
-
-# Certificate
-variable "email" {
-  description = "Your email relevant for letsencrypt certificate"
-}
-
-variable "cert_type" {
-  description = "prod or staging acme certificate"
-  default = "staging"
-  #default = "prod"
-}
-
-variable "cert_staging" {
-  description = "The letsencrypt staging certificate issuer server address"
-  default = "https://acme-staging-v02.api.letsencrypt.org/directory"
-}
-
-variable "cert_prod" {
-  description = "The letsencrypt production certificate issuer server address"
-  default = "https://acme-v02.api.letsencrypt.org/directory"
-}
-
-
-locals {
-  context = {
-    host = azurerm_kubernetes_cluster.aksdemo.kube_config[0].host
-    azure_dns_rg = var.az_dns_rg
-    client_id = var.aks_client_id
-    client_certificate = base64decode(azurerm_kubernetes_cluster.aksdemo.kube_config.0.client_certificate)
-    client_key = base64decode(azurerm_kubernetes_cluster.aksdemo.kube_config.0.client_key)
-    cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aksdemo.kube_config.0.cluster_ca_certificate)
-    client_secret = var.aks_client_secret
-    azure_subscription_id = var.az_subscription_id
-    azure_tenant_id = var.az_tenant_id
-    cert_type = var.cert_type
-    cert_staging = var.cert_staging
-    cert_prod = var.cert_prod
-    email = var.email
-    domain_address = var.domain_address
-  }
-}

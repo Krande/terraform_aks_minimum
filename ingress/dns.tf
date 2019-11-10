@@ -1,23 +1,23 @@
 resource "azurerm_dns_a_record" "azure_dns_a1" {
   name                = "@"
-  zone_name           = var.az_dns_zone
+  zone_name           = var.root_address
   resource_group_name = var.az_dns_rg
   ttl                 = 10800
-  records             = [kubernetes_service.ingress_nginx_inet.load_balancer_ingress.0.ip]
+  records             = [azurerm_public_ip.public_ip.ip_address]
 }
 
 resource "azurerm_dns_a_record" "azure_dns_a2" {
   name                = "*"
-  zone_name           = var.az_dns_zone
+  zone_name           = var.root_address
   resource_group_name = var.az_dns_rg
   ttl                 = 10800
-  records             = [kubernetes_service.ingress_nginx_inet.load_balancer_ingress.0.ip]
+  records             = [azurerm_public_ip.public_ip.ip_address]
 }
 
 resource "azurerm_dns_a_record" "azure_dns_a3" {
   name                = "www"
-  zone_name           = var.az_dns_zone
+  zone_name           = var.root_address
   resource_group_name = var.az_dns_rg
   ttl                 = 10800
-  records             = [kubernetes_service.ingress_nginx_inet.load_balancer_ingress.0.ip]
+  records             = [azurerm_public_ip.public_ip.ip_address]
 }

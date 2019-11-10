@@ -1,9 +1,11 @@
 resource "kubernetes_deployment" "pypi" {
+  depends_on = [var.ingress]
   metadata {
-    name      = "pypi"
+    name = "pypi"
     namespace = kubernetes_namespace.pypi.metadata[0].name
     labels = {
       app = "pypi"
+      heritage = "Tiller"
     }
   }
 
@@ -19,7 +21,7 @@ resource "kubernetes_deployment" "pypi" {
     template {
       metadata {
         labels = {
-          app  = "pypi"
+          app = "pypi"
           name = "pypi"
         }
       }
@@ -34,16 +36,16 @@ resource "kubernetes_deployment" "pypi" {
         }
 
         container {
-          name  = "pypi"
-          image = "pypiserver/pypiserver:latest"
+          name = "pypi"
+          image = "acrkris.azurecr.io/pypiserver:latest"
 
           port {
-            name           = "http"
+            name = "http"
             container_port = 8080
           }
 
           volume_mount {
-            name       = "pypi-data"
+            name = "pypi-data"
             mount_path = "/data/packages"
           }
 

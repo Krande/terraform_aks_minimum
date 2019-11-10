@@ -1,4 +1,4 @@
-apiVersion: certmanager.k8s.io/v1alpha1
+apiVersion: cert-manager.io/v1alpha2
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-${cert_type}
@@ -13,4 +13,8 @@ spec:
       # Secret resource used to store the account's private key.
       name: letsencrypt-${cert_type}
     # Enable the HTTP01 challenge mechanism for this Issuer
-    http01: {}
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+    - http01:
+        ingress:
+          class: nginx

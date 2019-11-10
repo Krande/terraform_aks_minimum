@@ -1,9 +1,3 @@
-resource "kubernetes_namespace" "pypi" {
-  metadata {
-    name = "pypi-ns"
-  }
-}
-
 resource "kubernetes_storage_class" "azurefile_uid_500_gid_500_dir_0777_file_0777" {
   metadata {
     name = "azurefile-uid-500-gid-500-dir-0777-file-0777"
@@ -12,6 +6,7 @@ resource "kubernetes_storage_class" "azurefile_uid_500_gid_500_dir_0777_file_077
   parameters = {
     skuName = "Standard_LRS"
   }
+
   storage_provisioner = "kubernetes.io/azure-file"
   #mount_options          = ["dir_mode=0777", "file_mode=0777", "uid=500", "gid=500"]
   allow_volume_expansion = true

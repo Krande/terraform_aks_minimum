@@ -50,6 +50,10 @@ resource "helm_release" "nginx_ingress" {
   timeout = 1000
   wait = true
 
+  provisioner "local-exec" {
+    command = "set KUBECONFIG=.kubeconfig"
+  }
+
   set {
     name = "rbac.create"
     value = "true"

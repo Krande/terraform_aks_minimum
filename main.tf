@@ -81,14 +81,12 @@ provider "helm" {
 
 resource "null_resource" "set_config" {
 
-  provisioner "local-exec" {
-    command = "set KUBECONFIG=.kubeconfig"
-  }
+
 }
 
 module "ingress" {
   source = "./ingress"
-  wait_on=null_resource.set_config
+  wait_on=azurerm_kubernetes_cluster.aks
   ingress_namespace = "ingress-nginx"
   cert_namespace = "cert-manager"
   principal_id = azuread_service_principal.akssp.id

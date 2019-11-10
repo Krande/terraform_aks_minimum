@@ -3,13 +3,19 @@ A minimum terraform-setup on AKS hosting a pipserver. This example was created t
 ([here](https://stackoverflow.com/questions/57499838/how-to-issue-letsencrypt-certificate-for-k8s-aks-using-terraform-resources)) 
 with the intent of addressing an error in issuing certificates after converting yaml files to terraform.
 
-The answer to my question was that I had to include a cert-manager to my cluster. I ended up using Helm for my ingress 
-and cert manager. The setup ended up a bit more complex than I initially imagined, but still it works. I guess there 
-probably are ways of simplifying the pypi deployment part using native terraform resourcse, but I have not had time to
-investigate further.  
+The answer to my question was that I had to include a cert-manager to my cluster and as far as I can tell there are no
+native terraform resources to create it. I ended up using Helm for my ingress and cert manager. 
 
-If anyone have tips for a more elegant and functional minimum terraform setup for a k8s cluster I would love to hear it! 
+The setup ended up a bit more complex than I initially imagined, and as it stands now it needs to be
+run twice. This is due to the kubeconfig not being updated (have to apply "set KUBECONFIG=.kubeconfig" before running 
+"terraform apply" a second time). So it's not pretty, but it "works" as a minimum example to get your deployment up and
+running. 
 
+There definitively are ways of simplifying the pypi deployment part using native terraform resources, and there is 
+probably an easy fix to the kubeconfig not being updated. But I have not had time to investigate further.  
+
+If anyone have tips for a more elegant, functional and (probably most of all) secure minimum terraform setup for a k8s 
+cluster I would love to hear it!
 
 ## Requirements
 This assumes you have a microsoft azure account, a domain name, azure storage account and have the dns to be handled by 

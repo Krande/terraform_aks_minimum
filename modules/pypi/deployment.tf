@@ -37,7 +37,7 @@ resource "kubernetes_deployment" "pypi" {
 
         container {
           name = "pypi"
-          image = "acrkris.azurecr.io/pypiserver:latest"
+          image = "pypiserver/pypiserver:latest"
 
           port {
             name = "http"

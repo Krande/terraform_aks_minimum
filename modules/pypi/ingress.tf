@@ -6,12 +6,9 @@ resource "kubernetes_ingress" "pypi" {
 
     annotations = {
       "kubernetes.io/ingress.class" = "nginx"
-      #"kubernetes.io/ingress.class" = "inet"
       "kubernetes.io/tls-acme" = "true"
       "certmanager.k8s.io/cluster-issuer" = "letsencrypt-${var.cert_type}"
-      #"cert-manager.io/cluster-issuer" = "letsencrypt-${var.cert_type}"
       "certmanager.k8s.io/acme-http01-edit-in-place": "true"
-      #"ingress.kubernetes.io/ssl-redirect" = "true"
     }
     labels = {
       app= "pypi"
@@ -21,13 +18,13 @@ resource "kubernetes_ingress" "pypi" {
 
   spec {
     tls {
-      hosts = ["pypi.${var.root_address}"]
+      hosts = [var.root_address]
       secret_name = "pypi-${var.cert_type}-letsencrypt"
 
     }
 
     rule {
-      host = "pypi.${var.root_address}"
+      host = var.root_address
       http {
         path {
           path = "/"
@@ -39,7 +36,7 @@ resource "kubernetes_ingress" "pypi" {
       }
     }
     rule {
-      host = "www.pypi.${var.root_address}"
+      host = "www.${var.root_address}"
       http {
         path {
           path = "/"

@@ -2,3 +2,4 @@
 .terraform
 .kubeconfig
 terraform.tfvars
+ingress/letsencrypt.yaml
